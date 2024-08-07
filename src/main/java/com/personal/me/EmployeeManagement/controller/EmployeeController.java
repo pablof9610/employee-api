@@ -22,6 +22,13 @@ public class EmployeeController {
         return employeeService.findAllEmployees();
     }
 
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<EmployeeModel> getEmployee(@PathVariable Long id) {
+        Optional<EmployeeModel> employee = employeeService.findEmployeeByID(id);
+        return employee.map(emp -> ResponseEntity.ok().body(emp))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
     @PostMapping
     public ResponseEntity saveEmployee(@RequestBody EmployeeModel employee) {
         EmployeeModel savedEmployee = employeeService.saveEmployee(employee);
