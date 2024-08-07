@@ -26,6 +26,15 @@ public class EmployeeService {
         return employeeRepository.findById(id);
     }
 
+    public Optional<EmployeeModel> deleteEmployeeByID(Long id) {
+        Optional<EmployeeModel> findedEmployee = findEmployeeByID(id);
+        if(findedEmployee.isEmpty()) {
+            return Optional.empty();
+        }
+        employeeRepository.delete(findedEmployee.get());
+        return findedEmployee;
+    }
+
 //    public String employeeJsonFormatter(List<EmployeeModel> employeeList) {
 //        String employeeJsonFormatted = null;
 //        for (EmployeeModel employee : employeeList) {

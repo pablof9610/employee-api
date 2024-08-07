@@ -35,4 +35,12 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body("Employee saved with ID: "+ savedEmployee.getId());
     }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity deleteEmployeeByID(@PathVariable Long id) {
+        Optional<EmployeeModel> employeeDeleted = employeeService.deleteEmployeeByID(id);
+        return employeeDeleted
+                .map(emp -> ResponseEntity.status(HttpStatus.OK).body("Employee deleted with ID: "+ id))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
 }
