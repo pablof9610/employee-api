@@ -34,14 +34,4 @@ public class EmployeeService {
         employeeRepository.delete(findedEmployee.get());
         return findedEmployee;
     }
-
-//    public String employeeJsonFormatter(List<EmployeeModel> employeeList) {
-//        String employeeJsonFormatted = null;
-//        for (EmployeeModel employee : employeeList) {
-//            employeeJsonFormatted += "{\"firstName" +
-//                    "\": \"" +employee.getFirstName()+"\"},";
-//        }
-//        System.out.println(employeeJsonFormatted);
-//        return employeeJsonFormatted;
-//    }
 }
