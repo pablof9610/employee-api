@@ -41,6 +41,6 @@ public class EmployeeController {
         Optional<EmployeeModel> employeeDeleted = employeeService.deleteEmployeeByID(id);
         return employeeDeleted
                 .map(emp -> ResponseEntity.status(HttpStatus.OK).body("Employee deleted with ID: "+ id))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found with ID: "+ id));
     }
 }
