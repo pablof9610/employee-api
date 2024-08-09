@@ -24,4 +24,12 @@ public class EmployeeModel {
 
     private String specialization;
     private int wage;
+
+    public void matchEmployees(EmployeeModel employeeUpdated) {
+        this.setFirstName(employeeUpdated.getFirstName());
+        this.setLastName(employeeUpdated.getLastName());
+        this.setLastName(employeeUpdated.getLastName());
+        this.setArea(employeeUpdated.getArea());
+        this.setSpecialization(employeeUpdated.getSpecialization());
+    }
 }

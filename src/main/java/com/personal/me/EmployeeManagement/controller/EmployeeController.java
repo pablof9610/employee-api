@@ -43,4 +43,13 @@ public class EmployeeController {
                 .map(emp -> ResponseEntity.status(HttpStatus.OK).body("Employee deleted with ID: "+ id))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found with ID: "+ id));
     }
+
+    @PutMapping(path = "/{id}")
+    public ResponseEntity updateEmployeeByID(@PathVariable Long id,
+                                            @RequestBody EmployeeModel employeeToUpdate) {
+        Optional<EmployeeModel> employeeUpdated = employeeService.updateEmployeeByID(id, employeeToUpdate);
+        return employeeUpdated
+                .map(emp -> ResponseEntity.status(HttpStatus.OK).body("Employee updated with ID: "+ id))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found with ID: "+ id));
+    }
 }

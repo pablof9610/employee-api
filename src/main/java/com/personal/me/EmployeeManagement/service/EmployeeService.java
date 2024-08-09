@@ -28,10 +28,18 @@ public class EmployeeService {
 
     public Optional<EmployeeModel> deleteEmployeeByID(Long id) {
         Optional<EmployeeModel> findedEmployee = findEmployeeByID(id);
-        if(findedEmployee.isEmpty()) {
+        if(findedEmployee.isEmpty())
             return Optional.empty();
-        }
         employeeRepository.delete(findedEmployee.get());
         return findedEmployee;
+    }
+
+    public Optional<EmployeeModel> updateEmployeeByID(Long id, EmployeeModel newEmployeeData) {
+        Optional<EmployeeModel> findedEmployee = findEmployeeByID(id);
+        if (findedEmployee.isEmpty())
+            return Optional.empty();
+        EmployeeModel employeeToUpdate = findedEmployee.get();
+        employeeToUpdate.matchEmployees(newEmployeeData);
+        return Optional.of(saveEmployee(employeeToUpdate));
     }
 }
