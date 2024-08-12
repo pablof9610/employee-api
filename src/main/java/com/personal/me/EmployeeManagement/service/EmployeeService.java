@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -22,24 +23,23 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Optional<EmployeeModel> findEmployeeByID(Long id) {
-        return employeeRepository.findById(id);
+    public EmployeeModel findEmployeeByID(Long id) {
+        Optional<EmployeeModel> findedEmployee = employeeRepository.findById(id);
+        if (findedEmployee.isEmpty()) {
+            throw new NoSuchElementException("Resource ID not found");
+        }
+        return findedEmployee.get();
     }
 
-    public Optional<EmployeeModel> deleteEmployeeByID(Long id) {
-        Optional<EmployeeModel> findedEmployee = findEmployeeByID(id);
-        if(findedEmployee.isEmpty())
-            return Optional.empty();
-        employeeRepository.delete(findedEmployee.get());
+    public EmployeeModel deleteEmployeeByID(Long id) {
+        EmployeeModel employeeToDelete = findEmployeeByID(id);
+        employeeRepository.delete(employeeToDelete);
+        return employeeToDelete;
+    }
+
+    public EmployeeModel updateEmployeeByID(Long id, EmployeeModel newEmployeeData) {
+        EmployeeModel findedEmployee = findEmployeeByID(id);
+        findedEmployee.matchEmployees(newEmployeeData);
         return findedEmployee;
-    }
-
-    public Optional<EmployeeModel> updateEmployeeByID(Long id, EmployeeModel newEmployeeData) {
-        Optional<EmployeeModel> findedEmployee = findEmployeeByID(id);
-        if (findedEmployee.isEmpty())
-            return Optional.empty();
-        EmployeeModel employeeToUpdate = findedEmployee.get();
-        employeeToUpdate.matchEmployees(newEmployeeData);
-        return Optional.of(saveEmployee(employeeToUpdate));
     }
 }
