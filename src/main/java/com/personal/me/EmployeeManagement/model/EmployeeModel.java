@@ -29,7 +29,7 @@ public class EmployeeModel {
         this.setFirstName(employeeUpdated.getFirstName());
         this.setLastName(employeeUpdated.getLastName());
         this.setLastName(employeeUpdated.getLastName());
-        this.setArea(employeeUpdated.getArea());
         this.setSpecialization(employeeUpdated.getSpecialization());
+        this.setWage(employeeUpdated.getWage());
     }
 }
