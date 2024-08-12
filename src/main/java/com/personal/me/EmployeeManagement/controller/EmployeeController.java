@@ -24,32 +24,26 @@ public class EmployeeController {
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<EmployeeModel> getEmployee(@PathVariable Long id) {
-        Optional<EmployeeModel> employee = employeeService.findEmployeeByID(id);
-        return employee.map(emp -> ResponseEntity.ok().body(emp))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        var employeeFounded = employeeService.findEmployeeByID(id);
+        return ResponseEntity.status(HttpStatus.OK).body(employeeFounded);
     }
 
     @PostMapping
-    public ResponseEntity saveEmployee(@RequestBody EmployeeModel employee) {
-        EmployeeModel savedEmployee = employeeService.saveEmployee(employee);
+    public ResponseEntity<EmployeeModel> saveEmployee(@RequestBody EmployeeModel employee) {
+        var savedEmployee = employeeService.saveEmployee(employee);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Employee saved with ID: "+ savedEmployee.getId());
+                .body(savedEmployee);
     }
 
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity deleteEmployeeByID(@PathVariable Long id) {
-        Optional<EmployeeModel> employeeDeleted = employeeService.deleteEmployeeByID(id);
-        return employeeDeleted
-                .map(emp -> ResponseEntity.status(HttpStatus.OK).body("Employee deleted with ID: "+ id))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found with ID: "+ id));
+    public ResponseEntity<EmployeeModel> deleteEmployeeByID(@PathVariable Long id) {
+        var employeeDeleted = employeeService.deleteEmployeeByID(id);
+        return ResponseEntity.status(HttpStatus.OK).body(employeeDeleted);
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity updateEmployeeByID(@PathVariable Long id,
-                                            @RequestBody EmployeeModel employeeToUpdate) {
-        Optional<EmployeeModel> employeeUpdated = employeeService.updateEmployeeByID(id, employeeToUpdate);
-        return employeeUpdated
-                .map(emp -> ResponseEntity.status(HttpStatus.OK).body("Employee updated with ID: "+ id))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found with ID: "+ id));
+    public ResponseEntity<EmployeeModel> updateEmployeeByID(@PathVariable Long id, @RequestBody EmployeeModel employeeToUpdate) {
+        var employeeUpdated = employeeService.updateEmployeeByID(id, employeeToUpdate);
+        return ResponseEntity.status(HttpStatus.OK).body(employeeUpdated);
     }
 }
