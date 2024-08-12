@@ -26,7 +26,7 @@ public class EmployeeService {
     public EmployeeModel findEmployeeByID(Long id) {
         Optional<EmployeeModel> findedEmployee = employeeRepository.findById(id);
         if (findedEmployee.isEmpty()) {
-            throw new NoSuchElementException("Resource ID not found");
+            throw new NoSuchElementException();
         }
         return findedEmployee.get();
     }
